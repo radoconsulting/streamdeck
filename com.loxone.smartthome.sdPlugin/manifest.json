@@ -1,0 +1,114 @@
+{
+  "Name": "Loxone Smart Home",
+  "Version": "1.0.0",
+  "Author": "Rado Consulting",
+  "Description": "Control your Loxone smart home system from Stream Deck",
+  "Icon": "imgs/plugin/icon",
+  "Category": "Loxone",
+  "CategoryIcon": "imgs/plugin/category-icon",
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.0"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.15"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Nodejs": {
+    "Version": "20",
+    "Debug": "enabled"
+  },
+  "CodePath": "bin/plugin.js",
+  "Actions": [
+    {
+      "Name": "Switch",
+      "UUID": "com.loxone.smartthome.switch",
+      "Icon": "imgs/actions/switch/icon",
+      "Tooltip": "Toggle a Loxone switch or output",
+      "PropertyInspectorPath": "ui/switch.html",
+      "States": [
+        {
+          "Image": "imgs/actions/switch/key",
+          "Name": "Off"
+        },
+        {
+          "Image": "imgs/actions/switch/key_on",
+          "Name": "On"
+        }
+      ],
+      "SupportedInMultiActions": true,
+      "Controllers": ["Keypad"]
+    },
+    {
+      "Name": "Dimmer",
+      "UUID": "com.loxone.smartthome.dimmer",
+      "Icon": "imgs/actions/dimmer/icon",
+      "Tooltip": "Control a Loxone dimmer or light",
+      "PropertyInspectorPath": "ui/dimmer.html",
+      "Encoder": {
+        "TriggerDescription": {
+          "Rotate": "Adjust brightness",
+          "Push": "Toggle on/off",
+          "Touch": "Toggle on/off",
+          "LongTouch": "Set to 100%"
+        },
+        "Icon": "imgs/actions/dimmer/dial",
+        "layout": "$B1"
+      },
+      "States": [
+        {
+          "Image": "imgs/actions/dimmer/key",
+          "Name": "Default"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Encoder"]
+    },
+    {
+      "Name": "Blind",
+      "UUID": "com.loxone.smartthome.blind",
+      "Icon": "imgs/actions/blind/icon",
+      "Tooltip": "Control a Loxone blind or jalousie",
+      "PropertyInspectorPath": "ui/blind.html",
+      "Encoder": {
+        "TriggerDescription": {
+          "Rotate": "Adjust position",
+          "Push": "Stop",
+          "Touch": "Stop",
+          "LongTouch": "Full up"
+        },
+        "Icon": "imgs/actions/blind/dial",
+        "layout": "$B1"
+      },
+      "States": [
+        {
+          "Image": "imgs/actions/blind/key",
+          "Name": "Default"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Encoder"]
+    },
+    {
+      "Name": "Pulse",
+      "UUID": "com.loxone.smartthome.pulse",
+      "Icon": "imgs/actions/pulse/icon",
+      "Tooltip": "Send a pulse to a Loxone virtual input",
+      "PropertyInspectorPath": "ui/pulse.html",
+      "States": [
+        {
+          "Image": "imgs/actions/pulse/key",
+          "Name": "Default"
+        }
+      ],
+      "SupportedInMultiActions": true,
+      "Controllers": ["Keypad"]
+    }
+  ]
+}

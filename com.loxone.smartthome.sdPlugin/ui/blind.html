@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Loxone Blind Configuration</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: transparent;
+        }
+        .sdpi-wrapper {
+            max-width: 400px;
+        }
+        .sdpi-item {
+            margin-bottom: 15px;
+        }
+        .sdpi-item-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #999;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #3d3d3d;
+            background: #2d2d2d;
+            color: #d8d8d8;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #0e99e0;
+        }
+        .info {
+            font-size: 11px;
+            color: #777;
+            margin-top: 5px;
+        }
+        .section-header {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d8d8d8;
+            margin: 20px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #3d3d3d;
+        }
+    </style>
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="section-header">Miniserver Connection</div>
+
+        <div class="sdpi-item">
+            <label class="sdpi-item-label" for="miniserverHost">Miniserver Address</label>
+            <input type="text" id="miniserverHost" placeholder="192.168.1.100">
+            <div class="info">IP address or hostname of your Loxone Miniserver</div>
+        </div>
+
+        <div class="sdpi-item">
+            <label class="sdpi-item-label" for="miniserverUsername">Username</label>
+            <input type="text" id="miniserverUsername" placeholder="admin">
+        </div>
+
+        <div class="sdpi-item">
+            <label class="sdpi-item-label" for="miniserverPassword">Password</label>
+            <input type="password" id="miniserverPassword">
+        </div>
+
+        <div class="section-header">Control Configuration</div>
+
+        <div class="sdpi-item">
+            <label class="sdpi-item-label" for="controlUuid">Control UUID</label>
+            <input type="text" id="controlUuid" placeholder="0f1e2d3c-4b5a-6978-8796-a5b4c3d2e1f0">
+            <div class="info">UUID of the blind/jalousie control (found in Loxone Config)</div>
+        </div>
+
+        <div class="sdpi-item">
+            <label class="sdpi-item-label" for="controlName">Display Name</label>
+            <input type="text" id="controlName" placeholder="Bedroom Blind">
+            <div class="info">Name to display on the Stream Deck button</div>
+        </div>
+
+        <div class="sdpi-item">
+            <label class="sdpi-item-label" for="stepSize">Dial Step Size (%)</label>
+            <input type="number" id="stepSize" min="1" max="50" value="10">
+            <div class="info">Percentage to move per dial rotation tick</div>
+        </div>
+    </div>
+
+    <script>
+        // Global settings object
+        let globalSettings = {};
+
+        // Initialize when property inspector loads
+        window.connectElgatoStreamDeckSocket = (inPort, inPropertyInspectorUUID, inRegisterEvent, inInfo, inActionInfo) => {
+            const websocket = new WebSocket('ws://127.0.0.1:' + inPort);
+
+            websocket.onopen = () => {
+                // Register property inspector
+                const json = {
+                    event: inRegisterEvent,
+                    uuid: inPropertyInspectorUUID
+                };
+                websocket.send(JSON.stringify(json));
+            };
+
+            websocket.onmessage = (evt) => {
+                const jsonObj = JSON.parse(evt.data);
+                const event = jsonObj.event;
+                const jsonPayload = jsonObj.payload;
+
+                if (event === 'didReceiveSettings') {
+                    globalSettings = jsonPayload.settings;
+                    updateUI();
+                }
+            };
+
+            // Save settings when inputs change
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    globalSettings[input.id] = input.value;
+                    saveSettings(websocket, inPropertyInspectorUUID);
+                });
+            });
+
+            // Request current settings
+            const actionInfo = JSON.parse(inActionInfo);
+            globalSettings = actionInfo.payload.settings;
+            updateUI();
+        };
+
+        function updateUI() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                if (globalSettings[input.id] !== undefined) {
+                    input.value = globalSettings[input.id];
+                }
+            });
+        }
+
+        function saveSettings(websocket, uuid) {
+            const json = {
+                event: 'setSettings',
+                context: uuid,
+                payload: globalSettings
+            };
+            websocket.send(JSON.stringify(json));
+        }
+    </script>
+</body>
+</html>

@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npm init:*)",
       "Bash(npm install:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx streamdeck --version)",
+      "Bash(npx streamdeck:*)",
+      "Bash(node create-placeholder-images.js:*)"
     ]
   }
 }

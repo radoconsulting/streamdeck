@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Loxone Blind Configuration</title>
+    <title>Loxone Light Controller Configuration</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -24,8 +24,7 @@
             color: #999;
         }
         input[type="text"],
-        input[type="password"],
-        input[type="number"] {
+        input[type="password"] {
             width: 100%;
             padding: 8px;
             border: 1px solid #3d3d3d;
@@ -36,8 +35,7 @@
             font-size: 12px;
         }
         input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="number"]:focus {
+        input[type="password"]:focus {
             outline: none;
             border-color: #0e99e0;
         }
@@ -54,6 +52,34 @@
             padding-bottom: 5px;
             border-bottom: 1px solid #3d3d3d;
         }
+        .config-helper {
+            background: #2d2d2d;
+            border: 1px solid #66B933;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .config-helper-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #66B933;
+            margin-bottom: 10px;
+        }
+        .btn-config {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #66B933 0%, #4a9922 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .btn-config:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -64,12 +90,10 @@
                 Open Control Browser
             </a>
             <div class="info" style="margin-top: 10px;">
-                Browse and select Loxone controls visually
+                Browse and select Loxone LightControllerV2 controls visually
             </div>
         </div>
 
-        <div class="section-header">Miniserver Connection</div>
-    <div class="sdpi-wrapper">
         <div class="section-header">Miniserver Connection</div>
 
         <div class="sdpi-item">
@@ -91,21 +115,15 @@
         <div class="section-header">Control Configuration</div>
 
         <div class="sdpi-item">
-            <label class="sdpi-item-label" for="controlUuid">Control UUID</label>
+            <label class="sdpi-item-label" for="controlUuid">Light Controller UUID</label>
             <input type="text" id="controlUuid" placeholder="0f1e2d3c-4b5a-6978-8796-a5b4c3d2e1f0">
-            <div class="info">UUID of the blind/jalousie control (found in Loxone Config)</div>
+            <div class="info">UUID of the LightControllerV2 control (found in Loxone Config)</div>
         </div>
 
         <div class="sdpi-item">
             <label class="sdpi-item-label" for="controlName">Display Name</label>
-            <input type="text" id="controlName" placeholder="Bedroom Blind">
+            <input type="text" id="controlName" placeholder="Living Room Lights">
             <div class="info">Name to display on the Stream Deck button</div>
-        </div>
-
-        <div class="sdpi-item">
-            <label class="sdpi-item-label" for="stepSize">Dial Step Size (%)</label>
-            <input type="number" id="stepSize" min="1" max="50" value="10">
-            <div class="info">Percentage to move per dial rotation tick</div>
         </div>
     </div>
 

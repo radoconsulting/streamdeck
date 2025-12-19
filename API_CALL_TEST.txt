@@ -1,0 +1,46 @@
+═══════════════════════════════════════
+LOXONE API CALL - FROM YOUR CONFIGURATION
+═══════════════════════════════════════
+
+Your Configuration (from config server logs):
+  Host: 192.168.0.99
+  UUID: (contains -d138-) - Need full UUID from button
+
+HTTP METHOD (TRY THESE URLS IN YOUR BROWSER):
+==========================================
+The URLs should be in this format:
+http://192.168.0.99:80/dev/sps/io/{YOUR-FULL-UUID}/plus
+
+Since I can see from the button that the UUID contains "-d138-",
+once you press the button, the full UUID should appear.
+
+From the config server, you have a control called "Verlichting Badkamer"
+which is a LightControllerV2 - this might be the one you configured.
+
+
+TESTING INSTRUCTIONS:
+====================
+1. The button should show you the full UUID when pressed
+2. Construct the URL manually using: http://192.168.0.99:80/dev/sps/io/{FULL-UUID}/On
+3. Open that URL in your browser
+4. Enter your Loxone credentials when prompted
+5. If the light turns on, then HTTP works!
+
+Alternative commands to try:
+- /On    - Turn on
+- /Off   - Turn off
+- /plus  - Toggle
+- /100   - Full brightness
+- /0     - Off
+
+
+WHY THE FILE ISN'T UPDATING:
+============================
+The plugin code is trying to write to this file when you press the button,
+but it seems the file write is failing or the button press isn't being
+detected. This could be because:
+1. The fs (filesystem) module isn't working in the plugin context
+2. The button is configured for a different action
+3. There's a permissions issue
+
+Let me know if the button shows a green checkmark when you press it.

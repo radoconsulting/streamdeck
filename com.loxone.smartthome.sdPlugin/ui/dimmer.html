@@ -54,10 +54,48 @@
             padding-bottom: 5px;
             border-bottom: 1px solid #3d3d3d;
         }
+        .config-helper {
+            background: #2d2d2d;
+            border: 1px solid #66B933;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .config-helper-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #66B933;
+            margin-bottom: 10px;
+        }
+        .btn-config {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #66B933 0%, #4a9922 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .btn-config:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
     <div class="sdpi-wrapper">
+        <div class="config-helper">
+            <div class="config-helper-title">🔍 Easy Configuration</div>
+            <a href="http://localhost:3456" target="_blank" class="btn-config">
+                Open Control Browser
+            </a>
+            <div class="info" style="margin-top: 10px;">
+                Browse and select Loxone controls visually
+            </div>
+        </div>
+
         <div class="section-header">Miniserver Connection</div>
 
         <div class="sdpi-item">

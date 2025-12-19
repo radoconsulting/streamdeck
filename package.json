@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "watch": "rollup -c -w"
+    "watch": "rollup -c -w",
+    "config": "node config-server/server.js",
+    "link": "streamdeck link com.loxone.smartthome.sdPlugin",
+    "restart": "streamdeck restart com.loxone.smartthome"
   },
   "repository": {
     "type": "git",
@@ -36,6 +39,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
     "ws": "^8.18.3"
   }
 }

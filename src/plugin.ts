@@ -9,6 +9,7 @@ import { SwitchAction } from "./actions/switch-action.js";
 import { DimmerAction } from "./actions/dimmer-action.js";
 import { BlindAction } from "./actions/blind-action.js";
 import { PulseAction } from "./actions/pulse-action.js";
+import { LightControllerAction } from "./actions/lightcontroller-action.js";
 
 // Set log level
 streamDeck.logger.setLevel("info");
@@ -18,6 +19,7 @@ streamDeck.actions.registerAction(new SwitchAction());
 streamDeck.actions.registerAction(new DimmerAction());
 streamDeck.actions.registerAction(new BlindAction());
 streamDeck.actions.registerAction(new PulseAction());
+streamDeck.actions.registerAction(new LightControllerAction());
 
 // Connect to Stream Deck
 streamDeck.connect();

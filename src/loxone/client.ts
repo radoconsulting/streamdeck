@@ -231,9 +231,31 @@ export class LoxoneClient extends EventEmitter {
      */
     async sendControl(uuid: string, command: string): Promise<void> {
         if (!this.authenticated) {
+            console.error("Not authenticated - cannot send control");
             throw new Error("Not authenticated");
         }
-        await this.sendCommand(`jdev/sps/io/${uuid}/${command}`);
+
+        if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+            console.error("WebSocket not connected - cannot send control");
+            throw new Error("WebSocket not connected");
+        }
+
+        const cmdString = `jdev/sps/io/${uuid}/${command}`;
+        const fullUrl = `ws://${this.config.host}:${this.config.port}/ws -> ${cmdString}`;
+
+        console.log(`===========================================`);
+        console.log(`SENDING LOXONE COMMAND:`);
+        console.log(`  Host: ${this.config.host}:${this.config.port}`);
+        console.log(`  UUID: ${uuid}`);
+        console.log(`  Command: ${command}`);
+        console.log(`  Full command string: ${cmdString}`);
+        console.log(`===========================================`);
+
+        // Send command without waiting for response (fire and forget for better reliability)
+        this.ws.send(cmdString);
+
+        // Give it a moment to process
+        await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     /**

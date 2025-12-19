@@ -1,6 +1,6 @@
 {
   "Name": "Loxone Smart Home",
-  "Version": "1.0.0",
+  "Version": "1.0.1",
   "Author": "Rado Consulting",
   "Description": "Control your Loxone smart home system from Stream Deck",
   "Icon": "imgs/plugin/icon",
@@ -109,6 +109,31 @@
       ],
       "SupportedInMultiActions": true,
       "Controllers": ["Keypad"]
+    },
+    {
+      "Name": "Light Controller",
+      "UUID": "com.loxone.smartthome.lightcontroller",
+      "Icon": "imgs/actions/lightcontroller/icon",
+      "Tooltip": "Cycle through Loxone light controller scenes/moods",
+      "PropertyInspectorPath": "ui/lightcontroller.html",
+      "Encoder": {
+        "TriggerDescription": {
+          "Rotate": "Cycle through scenes",
+          "Push": "Next scene",
+          "Touch": "Next scene",
+          "LongTouch": "Next scene"
+        },
+        "Icon": "imgs/actions/lightcontroller/dial",
+        "layout": "$B1"
+      },
+      "States": [
+        {
+          "Image": "imgs/actions/lightcontroller/key",
+          "Name": "Default"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Encoder"]
     }
   ]
 }
